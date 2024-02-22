@@ -8,23 +8,11 @@ public abstract class Visitor<T> {
    public abstract T Visit (NProgram p);
    public abstract T Visit (NBlock b);
    public abstract T Visit (NDeclarations d);
-   public abstract T Visit (NIdentList i);
-   public abstract T Visit (NVarDecls d);
-   public abstract T Visit (NProcFnDecl d);
    public abstract T Visit (NVarDecl d);
-   public abstract T Visit (NProcDecl d);
-   public abstract T Visit (NFuncDecl d);
-   public abstract T Visit (NParamList d);
 
    public abstract T Visit (NCompoundStmt b);
    public abstract T Visit (NAssignStmt a);
    public abstract T Visit (NWriteStmt w);
-   public abstract T Visit (NReadStmt r);
-   public abstract T Visit (NCallStmt r);
-   public abstract T Visit (NIfStmt r);
-   public abstract T Visit (NWhileStmt r);
-   public abstract T Visit (NRepeatStmt r);
-   public abstract T Visit (NForStmt r);
 
    public abstract T Visit (NLiteral t);
    public abstract T Visit (NIdentifier d);
