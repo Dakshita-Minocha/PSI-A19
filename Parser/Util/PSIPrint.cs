@@ -157,7 +157,7 @@ public class PSIPrint : Visitor<StringBuilder> {
       NWrite ("while ");
       w.While.Accept (this);
       Write (" do "); N++;
-      w.DoStmts.Accept (this); N--;
+      w.DoStmt.Accept (this); N--;
       return S;
    }
 
@@ -171,7 +171,7 @@ public class PSIPrint : Visitor<StringBuilder> {
       NWrite ($"for {f.IdentName} := "); f.FromExpr.Accept (this);
       Write (" to "); f.ToExpr.Accept (this);
       Write (" do"); N++;
-      f.DoStmt.ForEach (x => x.Accept (this)); N--;
+      f.DoStmt.Accept (this); N--;
       return S;
    }
 

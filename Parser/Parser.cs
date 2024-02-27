@@ -142,28 +142,20 @@ public class Parser {
    // if-stmt =  "if" expression "then" statement [ "else" statement ] .
    NIfStmt IfStmt () {
       var ifExpr = Expression ();
-      Expect (THEN);
-      List<NStmt> thenStmts = new (), elseStmts = new ();
-      if (Match (BEGIN))
-         do { thenStmts.Add (Stmt ()); Match (SEMI); } while (!Match (END));
-      else thenStmts.Add (Stmt ());
-      Match (SEMI);
-      if (Match (ELSE))
-         if (Match (BEGIN))
-            do { elseStmts.Add (Stmt ()); Match (SEMI); } while (!Match (END));
-         else elseStmts.Add (Stmt ());
-      return new NIfStmt (ifExpr, new (thenStmts.ToArray ()), new (thenStmts.ToArray ()));
+      Expect (THEN); Match (BEGIN);
+      NStmt thenStmt = Stmt (); Match (SEMI); Match (END);
+      Match (ELSE); Match (BEGIN);
+      NStmt? elseStmt = Stmt (); Match (SEMI); Match (END);
+      return new (ifExpr, thenStmt,elseStmt);
    }
 
    // while-stmt =  "while" expression "do" statement .
    NWhileStmt WhileStmt () {
       var expr = Expression ();
-      Expect (DO);
-      List<NStmt> stmts = new ();
-      if (Match (BEGIN))
-         do { stmts.Add (Stmt ()); Match (SEMI); } while (!Match (END));
-      else stmts.Add (Stmt ());
-      return new (expr, new (stmts.ToArray ()));
+      Expect (DO); Match (BEGIN);
+      NStmt stmt = Stmt (); Match (SEMI);
+      Match (END);
+      return new (expr, stmt);
    }
 
    // repeat-stmt =  "repeat" statement { ";" statement} "until" expression. 
@@ -180,12 +172,8 @@ public class Parser {
       var ident = Expect (IDENT);
       Expect (ASSIGN); var from = Expression ();
       Expect (TO, DOWNTO); var to = Expression ();
-      Expect (DO);
-      List<NStmt> stmts = new ();
-      if (Match (BEGIN))
-         do { stmts.Add (Stmt ()); Match (SEMI); } while (!Match (END));
-      else stmts.Add (Stmt ());
-      return new (ident, from, to, stmts.ToArray ());
+      Expect (DO); NStmt stmt = Stmt (); Match (SEMI);
+      return new (ident, from, to, stmt);
    }
    #endregion
 

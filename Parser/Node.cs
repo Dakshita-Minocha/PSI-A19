@@ -85,12 +85,12 @@ public record NCallStmt (Token Name, NExpr[] Exprs) : NStmt {
 }
 
 // An if statement
-public record NIfStmt (NExpr If, NCompoundStmt Then, NCompoundStmt Else) : NStmt {
+public record NIfStmt (NExpr If, NStmt Then, NStmt Else) : NStmt {
    public override T Accept<T> (Visitor<T> visitor) => visitor.Visit (this);
 }
 
 // A while statement
-public record NWhileStmt (NExpr While, NCompoundStmt DoStmts) : NStmt {
+public record NWhileStmt (NExpr While, NStmt DoStmt) : NStmt {
    public override T Accept<T> (Visitor<T> visitor) => visitor.Visit (this);
 }
 
@@ -100,7 +100,7 @@ public record NRepeatStmt (NExpr Until, NStmt[] DoStmts) : NStmt {
 }
 
 // A for statement
-public record NForStmt (Token IdentName, NExpr FromExpr, NExpr ToExpr, NStmt[] DoStmt) : NStmt {
+public record NForStmt (Token IdentName, NExpr FromExpr, NExpr ToExpr, NStmt DoStmt) : NStmt {
    public override T Accept<T> (Visitor<T> visitor) => visitor.Visit (this);
 }
 
